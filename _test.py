@@ -23,5 +23,3 @@ for i in text:
   else:
     time.sleep(typing_speed)
     webdriver.ActionChains(driver).send_keys(i).perform()
-            
-
