@@ -6,15 +6,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
 
-username = "nitrotype_bot_test1"
+username = "nitrotype_bot_test3"
 password = "http$3A%2F"
-typing_speed = 1/100
+typing_speed = 1/7 #almost around 75 - 80 WPM
+chromedriver_path = r'C:/chromedriver.exe'
 
 def prepare_browser():
     global driver
     options = Options()
-    options.add_experimental_option("excludeSwitches",["enable-logging"])
-    driver = webdriver.Chrome(executable_path=r'C:/chromedriver.exe', options=options)
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
     
 def fetch_paragraph():
     driver.execute_script("a=[];e=document.getElementsByClassName('dash-letter');for(let i=0;i<(document.getElementsByClassName('dash-letter').length);i++){a[i]=e[i].innerHTML;}")
@@ -33,16 +34,16 @@ def login_to_nitrotype():
     time.sleep(4)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         
-def race_with_random_players():  
-    wait = input("Press ENTER when the race starts! ")    
+def race_with_players():  
+    wait = input("Press ENTER when the race starts! ")   
     paragraph = fetch_paragraph()
-    for i in paragraph:
-        if i == '&nbsp;':
+    for letter in paragraph:
+        if letter == '&nbsp;':
             time.sleep(typing_speed)
             webdriver.ActionChains(driver).send_keys(Keys.SPACE).perform()
         else:
             time.sleep(typing_speed)
-            webdriver.ActionChains(driver).send_keys(i).perform()
+            webdriver.ActionChains(driver).send_keys(letter).perform()
     time.sleep(5)
     if driver.find_element_by_xpath("//*[@id='raceContainer']/div[1]/div[2]/div[4]/div/div[2]/button").is_displayed() == True:
         print("Race Finished...!")
@@ -50,24 +51,35 @@ def race_with_random_players():
 def check_race_invites():
     count = driver.execute_script("return document.getElementsByClassName('growl').length;")
     if count >= 1:
-        print("Race Invite Found.")
+        ch = input("Invite Found. Want to join?(Y/N): ")
+        if ch == 'Y' or ch == 'y':
+            link = driver.execute_script("return document.getElementsByTagName('a')[0].getAttribute('href');")
+            return link
+        elif ch == 'N' or ch == 'n':
+            driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
     else:
-        print("No Race Invite Found.")
-    
+        return 0;
+
 def main():
     prepare_browser()
     login_to_nitrotype()    
-    while(1):        
-        ch = input("Check Race Invites?(Y/N): ")
-        '''if ch == 'Y' or ch == 'y':
+    while(1):
+        ch = int(input("1)Race With Random Players\n2)Check for Invites\n3)Exit\nOption: "))
+        if ch == 1: 
             driver.get("https://nitrotype.com/race")
-            race_with_random_players()      
-        elif ch == 'N' or ch == 'n':
-            driver.get("https://nitrotype.com/garage")'''
-        if ch == 'Y' or ch == 'y':
-            check_race_invites()
-        else:
+            race_with_players()          
+        elif ch == 2:    
+            race_link = check_race_invites()
+            if race_link != 0:                
+                driver.get("https://nitrotype.com" + str(race_link))
+                driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
+                race_with_players()
+            else:
+                print("No Invitation Found...")
+        elif ch == 3:
             exit()
+        else:
+            print("Enter Valid Input !!!")           
       
 if __name__ == "__main__":
     main()
