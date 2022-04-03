@@ -1,10 +1,10 @@
+import time
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-import time
 
 username = "nitrotype_bot_test3"
 password = "http$3A%2F"
