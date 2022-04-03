@@ -77,6 +77,7 @@ def main():
             else:
                 print("No Invitation Found...")
         elif ch == 3:
+            driver.close()
             exit()
         else:
             print("Enter Valid Input !!!")           
