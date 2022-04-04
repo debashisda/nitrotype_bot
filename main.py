@@ -34,26 +34,25 @@ def login_to_nitrotype():
     time.sleep(3)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         
-def race_with_players():
-    #race_status = driver.execute_script("return document.getElementsByClassName('bucket-content').length;")
-    #race_status = driver.execute_script("return document.getElementsByClassName('tsxxl mbf tlh-1')[0].innerHTML;")   
+def race_with_players():    
     wait = input("Press ENTER when the race starts! ")
+    # needs Optimization and find better way to execute the below JS
     driver.execute_script("a=[];e=document.getElementsByClassName('dash-letter');l=document.getElementsByClassName('dash-letter').length;for(let i=0;i<l;i++){a[i]=e[i].innerHTML;}")
-    paragraph = driver.execute_script("return a;")        
+    paragraph = driver.execute_script("return a;")
     paragraph = paragraph[:-1]
     for letter in paragraph:
-        if letter == '&nbsp;':
-            time.sleep(data['typing_speed'])
+        if letter == '&nbsp;':   
             webdriver.ActionChains(driver).send_keys(Keys.SPACE).perform()
-        else:
             time.sleep(data['typing_speed'])
+        else:            
             webdriver.ActionChains(driver).send_keys(letter).perform()
-    time.sleep(5)    
+            time.sleep(data['typing_speed'])
+    time.sleep(5)
     if int(driver.execute_script("return Boolean(document.getElementsByClassName('raceResults-titles').length);")) == 1:
-        print("Race Finished...!")        
+        print("Race is Finished...!")
         time.sleep(2)
     else:
-        driver.get("https://www.nitrotype.com/garage")        
+        driver.get("https://www.nitrotype.com/garage")    
 
 def check_race_invites():
     count = driver.execute_script("return document.getElementsByClassName('growl').length;")
@@ -64,48 +63,51 @@ def check_race_invites():
             return link
         elif ch == 'N' or ch == 'n':
             if count >= 1:
+                # this button click creates error sometimes
                 driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
-            return 'N'
+                return 'N'
     else:
         return 0
 
-def race_with_friend():    
+def race_with_friend():
     race_link = check_race_invites()
     if race_link != 0 and race_link !='N':
-        driver.get("https://nitrotype.com" + str(race_link))        
+        driver.get("https://nitrotype.com" + str(race_link))
         race_with_players()
     elif race_link == 'N':
         print("Never Mind....")
         time.sleep(2)
     else:
         print("No Invites Found...")
-        time.sleep(1)    
+        time.sleep(1)
 
 def logout_and_exit():
     driver.execute_script("window.localStorage.clear();")
     driver.close()
-    exit()    
+    exit()
     
 def main():
     load_data()
     prepare_browser()
-    login_to_nitrotype()    
+    login_to_nitrotype()
     while(1):
         clear_window()
+        # main function creates error sometimes
         print("1)Race With Random Players\n2)Check for Invites\n3)Go to Garage\n4)Logout & Exit\n")
         ch = int(input("Option: "))
         if ch == 1: 
             driver.get("https://nitrotype.com/race")
-            race_with_players()          
-        elif ch == 2:            
-            race_with_friend()            
+            race_with_players()
+        elif ch == 2:
+            race_with_friend()
         elif ch == 3:
             driver.get("https://www.nitrotype.com/garage")
         elif ch == 4:
-            logout_and_exit()            
+            logout_and_exit()
         else:
             print("Enter Valid Input !!!")
             time.sleep(1)
-      
+            
 if __name__ == "__main__":
     main()
+    
