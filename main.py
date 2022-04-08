@@ -13,11 +13,11 @@ def load_data():
     with open('data.json') as data_file:
         data = json.load(data_file)
 
-def clear_window():
+def clear_console():
     clear = lambda:os.system('cls')
     clear()
     
-def prepare_browser():
+def load_browser():
     global driver
     options = Options()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -36,7 +36,7 @@ def login_to_nitrotype():
 def race_with_players():
     driver.execute_script("a=[];")
     wait = input("Press ENTER when the race starts! ")
-    # needs Optimization and find better way to execute the below JS    
+    # needs Optimization and find a better way to execute the below JS    
     driver.execute_script("e=document.getElementsByClassName('dash-letter');l=e.length;for(let i=0;i<l;i++){a[i]=e[i].innerHTML;}")
     paragraph = driver.execute_script("return a;")   
     for letter in paragraph:
@@ -48,10 +48,10 @@ def race_with_players():
             time.sleep(data['typing_speed'])
     time.sleep(5)
     if int(driver.execute_script("return Boolean(document.getElementsByClassName('raceResults-titles').length);")) == 1:
-        print("Race is Finished...!")
+        print("Race is Finished...")
         time.sleep(2)
     else:
-        print("Script malfunctioning...")
+        print("Script malfunctioning...!!!")
         time.sleep(2)
         driver.execute_script("window.open('https://nitrotype.com/garage','_self');")  
 
@@ -61,6 +61,7 @@ def check_race_invites():
         ch = input("Invite Found. Want to join?(Y/N): ")
         if ch == 'Y' or ch == 'y':
             link = driver.execute_script("return document.getElementsByTagName('a')[0].getAttribute('href');")
+            driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
             return link
         elif ch == 'N' or ch == 'n':
             if count >= 1:
@@ -93,12 +94,13 @@ def logout_and_exit():
     
 def main():
     load_data()
-    prepare_browser()
+    load_browser()
     login_to_nitrotype()
     while(1):
-        clear_window()
+        ch = 0
+        clear_console()
         # main function creates error sometimes
-        print("1)Race With Random Players\n2)Check for Invites\n3)Go to Garage\n4)Logout & Exit\n")
+        print("1)Race With Random Players \n2)Check for Invites \n3)Go to Garage \n4)Logout & Exit \n")
         ch = int(input("Option: "))
         if ch == 1:           
             driver.execute_script("window.open('https://nitrotype.com/race','_self');")
@@ -114,5 +116,4 @@ def main():
             time.sleep(1)
             
 if __name__ == "__main__":
-    main()
-    
+    main()   
