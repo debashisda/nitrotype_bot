@@ -95,13 +95,13 @@ def main():
         # main function creates error sometimes
         print("1)Race With Random Players\n2)Check for Invites\n3)Go to Garage\n4)Logout & Exit\n")
         ch = int(input("Option: "))
-        if ch == 1: 
-            driver.get("https://nitrotype.com/race")
+        if ch == 1:           
+            driver.execute_script("window.open('https://nitrotype.com/race','_self');")
             race_with_players()
         elif ch == 2:
             race_with_friend()
         elif ch == 3:
-            driver.get("https://www.nitrotype.com/garage")
+            driver.execute_script("window.open('https://nitrotype.com/garage','_self');")            
         elif ch == 4:
             logout_and_exit()
         else:
