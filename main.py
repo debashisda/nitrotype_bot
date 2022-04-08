@@ -51,7 +51,9 @@ def race_with_players():
         print("Race is Finished...!")
         time.sleep(2)
     else:
-        driver.execute_script("window.open('https://nitrotype.com/garage','_self');")   
+        print("Script malfunctioning...")
+        time.sleep(2)
+        driver.execute_script("window.open('https://nitrotype.com/garage','_self');")  
 
 def check_race_invites():
     count = driver.execute_script("return document.getElementsByClassName('growl').length;")
@@ -104,7 +106,7 @@ def main():
         elif ch == 4:
             logout_and_exit()
         else:
-            print("Enter Valid Input !!!")
+            print("Please Enter a Valid Input !!!")
             time.sleep(1)
             
 if __name__ == "__main__":
