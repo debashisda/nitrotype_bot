@@ -89,9 +89,9 @@ def logout_and_exit():
     if sure == 'Y' or sure == 'y':
         driver.execute_script("window.localStorage.clear();")
         driver.close()
-        exit()
+        os._exit(0)
     else:
-        return 0
+        return
     
 def main():
     load_data()
@@ -99,10 +99,9 @@ def main():
     login_to_nitrotype()
     while(1):
         ch = 0
-        clear_console()
-        # main function creates error sometimes
-        print("1)Race With Random Players \n2)Check for Invites \n3)Go to Garage \n4)Logout & Exit \n")
-        ch = int(input("Option: "))
+        clear_console()        
+        print("1)Join Race With Random Players \n2)Join Race With Invites \n3)Go to Garage \n4)Logout & Exit \n")
+        ch = int(input("Option:"))
         if ch == 1:           
             driver.execute_script("window.open('https://nitrotype.com/race','_self');")
             race_with_players()
