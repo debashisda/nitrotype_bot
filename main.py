@@ -37,7 +37,7 @@ def race_with_players():
     driver.execute_script("a=[];")
     wait = input("Press ENTER when the race starts! ")
     # needs Optimization and find a better way to execute the below JS    
-    driver.execute_script("e=document.getElementsByClassName('dash-letter');l=e.length;for(let i=0;i<l;i++){a[i]=e[i].innerHTML;}")
+    driver.execute_script("e=document.getElementsByClassName('dash-letter');for(let i=0;i<e.length;i++){a[i]=e[i].innerHTML;}")
     paragraph = driver.execute_script("return a;")   
     for letter in paragraph:
         if letter == '&nbsp;':
