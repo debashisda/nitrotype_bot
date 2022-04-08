@@ -17,7 +17,7 @@ def clear_console():
     clear = lambda:os.system('cls')
     clear()
     
-def load_browser():
+def load_driver():
     global driver
     options = Options()
     options.add_experimental_option("excludeSwitches",["enable-logging"])
@@ -60,13 +60,11 @@ def check_race_invites():
     if count == 1:
         ch = input("Invite Found. Want to join?(Y/N): ")
         if ch == 'Y' or ch == 'y':
-            link = driver.execute_script("return document.getElementsByTagName('a')[0].getAttribute('href');")
-            # caution! below button click throws exception sometimes
+            link = driver.execute_script("return document.getElementsByTagName('a')[0].getAttribute('href');")            
             driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
             return link
         elif ch == 'N' or ch == 'n':
-            if count >= 1:
-                # this button click creates error sometimes
+            if count >= 1:                
                 driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
                 return 'N'
     else:
@@ -95,7 +93,7 @@ def logout_and_exit():
     
 def main():
     load_data()
-    load_browser()
+    load_driver()
     login_to_nitrotype()
     while(1):
         ch = 0
