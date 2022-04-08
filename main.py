@@ -34,17 +34,17 @@ def login_to_nitrotype():
     time.sleep(3)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         
-def race_with_players():    
+def race_with_players():
+    driver.execute_script("a=[];")
     wait = input("Press ENTER when the race starts! ")
-    # needs Optimization and find better way to execute the below JS
-    driver.execute_script("a=[];e=document.getElementsByClassName('dash-letter');l=document.getElementsByClassName('dash-letter').length;for(let i=0;i<l;i++){a[i]=e[i].innerHTML;}")
-    paragraph = driver.execute_script("return a;")
-    paragraph = paragraph[:-1]
+    # needs Optimization and find better way to execute the below JS    
+    driver.execute_script("e=document.getElementsByClassName('dash-letter');l=e.length;for(let i=0;i<l;i++){a[i]=e[i].innerHTML;}")
+    paragraph = driver.execute_script("return a;")   
     for letter in paragraph:
-        if letter == '&nbsp;':   
+        if letter == '&nbsp;':
             webdriver.ActionChains(driver).send_keys(Keys.SPACE).perform()
             time.sleep(data['typing_speed'])
-        else:            
+        else:
             webdriver.ActionChains(driver).send_keys(letter).perform()
             time.sleep(data['typing_speed'])
     time.sleep(5)
@@ -52,7 +52,7 @@ def race_with_players():
         print("Race is Finished...!")
         time.sleep(2)
     else:
-        driver.get("https://www.nitrotype.com/garage")    
+        driver.execute_script("window.open('https://nitrotype.com/garage','_self');")   
 
 def check_race_invites():
     count = driver.execute_script("return document.getElementsByClassName('growl').length;")
