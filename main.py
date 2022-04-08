@@ -23,11 +23,10 @@ def prepare_browser():
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome(executable_path=data['path'], options=options)
 
-def login_to_nitrotype():
-    driver.get("https://www.nitrotype.com/login")
+def login_to_nitrotype():    
+    driver.execute_script("window.open('https://nitrotype.com/login','_self');")    
     driver.maximize_window()
-    driver.find_element_by_id("username").send_keys(data['username'])
-    time.sleep(2)
+    driver.find_element_by_id("username").send_keys(data['username'])    
     driver.find_element_by_id("password").send_keys(data['password'])
     time.sleep(2)
     driver.find_element_by_xpath("//*[@id='root']/div/div/main/div/section/div[2]/div/div[3]/form/button").click()
