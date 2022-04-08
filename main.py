@@ -30,8 +30,9 @@ def login_to_nitrotype():
     driver.find_element_by_id("password").send_keys(data['password'])
     time.sleep(2)
     driver.find_element_by_xpath("//*[@id='root']/div/div/main/div/section/div[2]/div/div[3]/form/button").click()
-    time.sleep(3)
-    webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+    modal = driver.execute_script("return document.getElementsByClassName('modal is-active modal--a modal--l').length;")
+    if modal == 1:
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         
 def race_with_players():
     driver.execute_script("a=[];")
@@ -108,10 +109,13 @@ def main():
         elif ch == 3:
             driver.execute_script("window.open('https://nitrotype.com/garage','_self');")            
         elif ch == 4:
-            logout_and_exit()
+            break            
         else:
             print("Please Enter a Valid Input !!!")
             time.sleep(1)
+    print("Logging out...")
+    logout_and_exit()
             
 if __name__ == "__main__":
-    main()   
+    main()
+    
