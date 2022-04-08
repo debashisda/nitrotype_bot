@@ -20,8 +20,8 @@ def clear_console():
 def load_browser():
     global driver
     options = Options()
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    driver = webdriver.Chrome(executable_path=data['path'], options=options)
+    options.add_experimental_option("excludeSwitches",["enable-logging"])
+    driver = webdriver.Chrome(executable_path=data['path'],options=options)
 
 def login_to_nitrotype():    
     driver.execute_script("window.open('https://nitrotype.com/login','_self');")    
@@ -61,6 +61,7 @@ def check_race_invites():
         ch = input("Invite Found. Want to join?(Y/N): ")
         if ch == 'Y' or ch == 'y':
             link = driver.execute_script("return document.getElementsByTagName('a')[0].getAttribute('href');")
+            # caution! below button click throws exception sometimes
             driver.find_element_by_xpath("//*[@id='root']/div[1]/div/button").click()
             return link
         elif ch == 'N' or ch == 'n':
