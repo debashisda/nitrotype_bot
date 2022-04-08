@@ -70,7 +70,7 @@ def check_race_invites():
 
 def race_with_friend():
     race_link = check_race_invites()
-    if race_link != 0 and race_link !='N':
+    if race_link != 0 and race_link !='N':     
         driver.get("https://nitrotype.com" + str(race_link))
         race_with_players()
     elif race_link == 'N':
