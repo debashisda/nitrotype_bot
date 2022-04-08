@@ -83,9 +83,13 @@ def race_with_friend():
         time.sleep(1)
 
 def logout_and_exit():
-    driver.execute_script("window.localStorage.clear();")
-    driver.close()
-    exit()
+    sure = str(input("Are you sure?(Y/N): "))
+    if sure == 'Y' or sure == 'y':
+        driver.execute_script("window.localStorage.clear();")
+        driver.close()
+        exit()
+    else:
+        return 0
     
 def main():
     load_data()
