@@ -33,6 +33,9 @@ def login_to_nitrotype():
     modal = driver.execute_script("return document.getElementsByClassName('modal is-active modal--a modal--l').length;")
     if modal == 1:
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+    else:
+        sleep(5)
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()        
         
 def race_with_players():
     driver.execute_script("a=[];")
