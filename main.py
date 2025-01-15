@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.service import Service
 import pyfiglet
 from pyfiglet import Figlet
 
@@ -23,12 +24,22 @@ def load_data():
 def clear_console():
     clear = lambda:os.system('cls')
     clear()
-    
+
+#OLD Code
+#def load_driver():
+#    global driver
+#    options = Options()
+#    service = service()
+#    options.add_experimental_option("excludeSwitches",["enable-logging"])
+#    driver = webdriver.Chrome(service=service,options=options)
+
 def load_driver():
     global driver
-    options = Options()
-    options.add_experimental_option("excludeSwitches",["enable-logging"])
-    driver = webdriver.Chrome(executable_path=data['path'],options=options)
+    chrome_options = Options()
+    service = Service()
+    os.system("start chrome.exe --remote-debugging-port=9222")
+    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
 def login_to_nitrotype():    
     driver.execute_script("window.open('https://nitrotype.com/login','_self');")    

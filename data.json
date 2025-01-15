@@ -1,6 +1,6 @@
 {
 	"path" : "CHROME_DRIVER_PATH",
-	"username" : "USER_NAME",
-	"password" : "PASSWORD",
+	"username" : "modtest1",
+	"password" : "http$3A%2F",
 	"typing_speed" : 0.09	
 }
