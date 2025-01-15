@@ -107,8 +107,8 @@ def race_with_friends():
 def logout_and_exit():
     sure = str(input("Are you sure?(Y/N): "))
     if sure == 'Y' or sure == 'y':
-        driver.execute_script("window.localStorage.clear();")
-        driver.close()
+        #driver.execute_script("window.localStorage.clear();")
+        #driver.close()
         os._exit(0)
     else:
         return
