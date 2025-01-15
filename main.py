@@ -18,7 +18,7 @@ def load_signature():
 
 def load_data():
     global data
-    with open('data.json') as data_file:
+    with open('C:/Users/debas/Documents/GitHub/nitrotype_bot/data.json') as data_file:
         data = json.load(data_file)
 
 def clear_console():
@@ -44,9 +44,10 @@ def load_driver():
 def login_to_nitrotype():    
     driver.execute_script("window.open('https://nitrotype.com/login','_self');")    
     driver.maximize_window()
-    driver.find_element("id","username").send_keys(data['username'])       
+    driver.find_element("id","username").send_keys(data['username'])
+    time.sleep(5)      
     driver.find_element("id","password").send_keys(data['password'])
-    # time.sleep(2) # enable if the captcha is getting triggered
+    time.sleep(5) # enable if the captcha is getting triggered
     driver.find_element("xpath","//*[@id='root']/div/div/main/div/section/div[2]/div/div[3]/form/button").click()
     '''modal = driver.execute_script("return document.getElementsByClassName('modal is-active modal--a modal--l').length;")
     if modal == 1:
@@ -55,7 +56,7 @@ def login_to_nitrotype():
         time.sleep(5)
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()'''
     time.sleep(2)
-    driver.execute_script("window.open('https://nitrotype.com/garage','_self');")
+    #driver.execute_script("window.open('https://nitrotype.com/garage','_self');")
             
 def race_with_players():
     driver.execute_script("a=[];")
@@ -115,18 +116,18 @@ def logout_and_exit():
     
 def main():
     load_data()
-    load_driver()
-    clear_console()
-    login_to_nitrotype()
     while(1):
-        ch = 0
         clear_console()
         load_signature()
         print("1)Join Race With Random Players \n2)Join Race With Invites \n3)Go to Garage \n4)Logout & Exit \n")
         ch = int(input("Option:"))
-        if ch == 1:           
-            driver.execute_script("window.open('https://nitrotype.com/race','_self');")
-            race_with_players()
+        if ch == 1: 
+            load_driver()
+            clear_console()   
+            login_to_nitrotype()   
+            input("Option:")
+            #driver.execute_script("window.open('https://nitrotype.com/race','_self');")
+            #race_with_players()
         elif ch == 2:
             race_with_friends()
         elif ch == 3:
